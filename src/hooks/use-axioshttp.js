@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useCallback, useState } from "react";
 import qs from "qs";
+import axios from "../adapters/axios";
 
 const useAxioshttp = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,21 +24,23 @@ const useAxioshttp = () => {
       },
     })
       .then((res) => {
-        if(res.data.success) {
+        if (res.data.success) {
           applyData(res.data.data);
         } else {
-          setError(res.data.title);
+          setError(res.data?.data?.title ?? res.data.title);
           console.log(res);
         }
-        setIsLoading(false);
       })
       .catch((e) => {
         setError(e.message || "Something went wrong!");
         if (e?.response?.data) {
+          setError(e?.response?.data.title)
           console.log(e?.response?.data);
         } else {
           console.log(e);
         }
+      })
+      .then(() => {
         setIsLoading(false);
       });
   }, []);

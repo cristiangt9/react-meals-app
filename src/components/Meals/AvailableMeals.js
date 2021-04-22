@@ -18,7 +18,7 @@ const AvailableMeals = () => {
     sendRequest(
       {
         method: "GET",
-        url: "http://backendmeals.test/meals",
+        url: "meals",
         headers: { "Content-Type": "application/json" },
         data: null,
       },

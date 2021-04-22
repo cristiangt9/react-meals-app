@@ -44,3 +44,31 @@
   background-color: #8a2b06;
   color: white;
 }
+
+.cartLoading {
+  padding-top: 2rem;
+  text-align: center;
+  color: #8a2b06;
+  animation: loading-appear 1s ease-out infinite alternate;
+}
+
+.cartError {
+  padding-top: 2rem;
+  text-align: center;
+  color: red;
+}
+
+.sended {
+  text-align: center;
+  color: #8a2b06;
+}
+
+@keyframes loading-appear {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
