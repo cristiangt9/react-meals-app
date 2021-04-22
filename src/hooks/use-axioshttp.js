@@ -24,15 +24,22 @@ const useAxioshttp = () => {
       },
     })
       .then((res) => {
-        applyData(res.data);
-      })
-      .catch((error) => {
-        setError(error.message || "Something went wrong!");
-        if (error?.response?.data) {
-          console.log(error?.response?.data);
+        if(res.data.success) {
+          applyData(res.data.data);
         } else {
-          console.log(error);
+          setError(res.data.title);
+          console.log(res);
         }
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        setError(e.message || "Something went wrong!");
+        if (e?.response?.data) {
+          console.log(e?.response?.data);
+        } else {
+          console.log(e);
+        }
+        setIsLoading(false);
       });
   }, []);
   return {

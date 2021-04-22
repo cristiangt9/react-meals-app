@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useAxioshttp from "../../hooks/use-axioshttp";
 import Card from "../UI/Card";
 import classes from "./AvailableMeals.module.css";
-import DUMMY_MEALS from "./dataDummyMeals";
+// import DUMMY_MEALS from "./dataDummyMeals";
 import MealItem from "./MealItem/MealItem";
 
 const AvailableMeals = () => {
@@ -13,7 +13,7 @@ const AvailableMeals = () => {
   useEffect(() => {
     const setMealsFn = (res) => {
       console.log(res);
-      // setMeals(res);
+      setMeals(res.meals);
     };
     sendRequest(
       {
@@ -26,19 +26,26 @@ const AvailableMeals = () => {
     );
   }, [sendRequest]);
 
-  const mealsList = DUMMY_MEALS.map((meal) => (
-    <MealItem
-      key={meal.id}
-      id={meal.id}
-      name={meal.name}
-      description={meal.description}
-      price={meal.price}
-    />
-  ));
+  if (isLoading) {
+    return <section className={classes.mealsLoading}>Loading...</section>;
+  }
+  if (error) {
+    return <section className={classes.mealsError}>{error}</section>;
+  }
   return (
     <section className={classes.meals}>
       <Card>
-        <ul>{mealsList}</ul>
+        <ul>
+          {meals.map((meal) => (
+            <MealItem
+              key={meal.id}
+              id={meal.id}
+              name={meal.name}
+              description={meal.description}
+              price={meal.price}
+            />
+          ))}
+        </ul>
       </Card>
     </section>
   );
